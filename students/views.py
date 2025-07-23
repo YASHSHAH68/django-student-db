@@ -31,26 +31,30 @@ def course_list(request):
 
     courses = Course.objects.all().order_by('-createdAt')
     query = request.GET.get('query' , '')
+    limit = request.GET.get('limit' , '7')
 
     if query:
         courses = Course.objects.filter(Q(name__icontains = query) | Q(description__icontains = query))
 
-    paginator = Paginator(courses , 5)
+    paginator = Paginator(courses , limit)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
-    return render(request, 'course_list.html', {'courses': page_object, 'page_obj' : page_object})
+    return render(request, 'course_list.html', {'courses': page_object, 'page_obj' : page_object , 'limit' : limit})
 
 
 def student_list(request):
     students = Student.objects.all().order_by('-createdAt')
     query = request.GET.get('query')
+    limit = request.GET.get('limit' , '7')
+
     if query:
         students = Student.objects.filter(Q(fname__icontains = query) | Q(lname__icontains = query) | Q(phoneno__icontains = query) | Q(email = query))
-    paginator = Paginator(students , 5)
+    
+    paginator = Paginator(students , limit)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
 
-    return render(request, 'student_list.html', {'students': page_object ,'page_obj' : page_object})
+    return render(request, 'student_list.html', {'students': page_object ,'page_obj' : page_object , 'limit' : limit})
 
 def course_edit(request, course_id):
     course = get_object_or_404(Course, id=course_id)

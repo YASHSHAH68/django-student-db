@@ -118,10 +118,23 @@
             <a href="{% url 'courses_list' %}" class="btn">View Courses</a>
             <a href="{% url 'student_form' %}" class="btn"><i class="fa-solid fa-plus" style="padding-right: 10px;"></i>New Student</a>
         </div>
-        <form class="search-box d-flex" method="GET" action="">
-                <input class="form-control me-2" type="search" name="query" placeholder="Search for First Name , Last Name , Email , Phone Number" aria-label="Search">
-                <button class="btn btn-primary" type="submit">Search</button>
-            </form>
+        <form class="row g-2 align-items-center mb-4" method="GET" action="">
+            <div class="col-md-6">
+                <input class="form-control" type="search" name="query" placeholder="Search Name and Description" value="{{ request.GET.query }}" aria-label="Search">
+            </div>
+            <div class="col-md-3">
+                <select name="limit" class="form-select">
+                    <option value="5" {% if request.GET.limit == '5' %}selected{% endif %}>Display 5 records</option>
+                    <option value="10" {% if request.GET.limit == '10' or not request.GET.limit %}selected{% endif %}>Display 10 records</option>
+                    <option value="25" {% if request.GET.limit == '25' %}selected{% endif %}>Display 25 records</option>
+                    <option value="50" {% if request.GET.limit == '50' %}selected{% endif %}>Display 50 records</option>
+                    <option value="100" {% if request.GET.limit == '100' %}selected{% endif %}>Display 100 records</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" type="submit">Search</button>
+            </div>
+        </form>
 
         <div class="results text-center">
             
