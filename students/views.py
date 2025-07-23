@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Student
-from .forms import StudentForm, CourseForm
+from .forms import CourseForm , StudentForm
 from django.core.paginator import Paginator
 
 def course_form(request):
@@ -61,7 +61,7 @@ def course_delete(request, course_id):
         course.delete()
         return redirect('courses_list')
     
-    return render(request, 'confirm_course_delete.html', {'course': course})
+    return render(request, 'confirm_course_deletion.html', {'course': course})
 
 def student_update(request, student_id):
     student = get_object_or_404(Student, id=student_id)
@@ -84,9 +84,9 @@ def student_delete(request, student_id):
     
     return render(request, 'confirm_student_deletion.html', {'student': student})
 
-# def course_search(request):
-#     pass
-# def student_search(request):
-#     pass
+def course_search(request):
+    pass
+def student_search(request):
+    pass
 
 
