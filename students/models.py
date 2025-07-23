@@ -16,9 +16,6 @@ class Student(models.Model):
     ('Female' , 'Female'),
     ('Other' , 'Other')
 ]
-    STATUS_CHOICES = [
-        ('Activate' , 'Activate'),
-    ]
     class Meta:
         db_table = 'students'
 
@@ -27,7 +24,7 @@ class Student(models.Model):
     email = models.EmailField(unique=True,error_messages={'unique':'No Duplicates Allowed'})
     gender = models.CharField(max_length=10,choices=GENDER_CHOICES)
     phoneno = models.CharField(max_length=10,unique=True)
-    status = models.CharField(max_length=20 , choices=STATUS_CHOICES)
+    status = models.CharField(max_length=20 , default="Activate")
     course = models.ForeignKey(Course , on_delete=models.CASCADE , related_name='course_name')
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)

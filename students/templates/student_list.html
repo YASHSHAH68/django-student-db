@@ -109,6 +109,41 @@
             justify-content: space-between;
             align-items: center;
         }
+        .pagination {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 30px;
+                    padding: 10px 0;
+                }
+
+                .pagination a, .pagination span {
+                    margin: 0 5px;
+                    padding: 8px 14px;
+                    text-decoration: none;
+                    color: #007bff;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-weight: bold;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+
+                .pagination a:hover {
+                    background-color: #007bff;
+                    color: white;
+                }
+
+                .pagination .active {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                }
+
+                .pagination .disabled {
+                    color: #aaa;
+                    border-color: #ddd;
+                    pointer-events: none;
+                }
     </style>
 </head>
 <body>
@@ -120,12 +155,12 @@
         </div>
         <form class="row g-2 align-items-center mb-4" method="GET" action="">
             <div class="col-md-6">
-                <input class="form-control" type="search" name="query" placeholder="Search Name and Description" value="{{ request.GET.query }}" aria-label="Search">
+                <input class="form-control" type="search" name="query" placeholder="Search First Name , Last Name , Email and Phone Number" value="{{ request.GET.query }}" aria-label="Search">
             </div>
             <div class="col-md-3">
                 <select name="limit" class="form-select">
-                    <option value="5" {% if request.GET.limit == '5' %}selected{% endif %}>Display 5 records</option>
-                    <option value="10" {% if request.GET.limit == '10' or not request.GET.limit %}selected{% endif %}>Display 10 records</option>
+                    <option value="5" {% if request.GET.limit == '5' or not request.GET.limit %}selected{% endif %}>Display 5 records</option>
+                    <option value="10" {% if request.GET.limit == '10'%}selected{% endif %}>Display 10 records</option>
                     <option value="25" {% if request.GET.limit == '25' %}selected{% endif %}>Display 25 records</option>
                     <option value="50" {% if request.GET.limit == '50' %}selected{% endif %}>Display 50 records</option>
                     <option value="100" {% if request.GET.limit == '100' %}selected{% endif %}>Display 100 records</option>
@@ -180,13 +215,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
-            <div class="no-data">No students found in the database.</div>
-        {% endif %}
 
-            <div class="pagination">
+        <div class="pagination">
                  {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}&query={{request.GET.query}}">&laquo; Prev</a>
+                <a href="?page={{ page_obj.previous_page_number }}&query={{request.GET.query}}&limit={{request.GET.limit}}">&laquo; Prev</a>
                     {% else %}
                 <a class="disabled">&laquo; Prev</a>
                     {% endif %}
@@ -195,53 +227,23 @@
                     {% if page_obj.number == num %}
                     <a class="active">{{ num }}</a>
                         {% else %}
-                    <a href="?page={{ num }}&query={{request.GET.query}}">{{ num }}</a>
+                    <a href="?page={{ num }}&query={{request.GET.query}}&limit={{request.GET.limit}}">{{ num }}</a>
                         {% endif %}
                         {% endfor %}
 
                 {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&query={{request.GET.query}}">Next &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}&query={{request.GET.query}}&limit={{request.GET.limit}}">Next &raquo;</a>
                     {% else %}
                 <a class="disabled">Next &raquo;</a>
                     {% endif %}
             </div>
-            <style>
-                .pagination {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-top: 30px;
-                    padding: 10px 0;
-                }
-
-                .pagination a, .pagination span {
-                    margin: 0 5px;
-                    padding: 8px 14px;
-                    text-decoration: none;
-                    color: #007bff;
-                    border: 1px solid #ddd;
-                    border-radius: 4px;
-                    font-weight: bold;
-                    transition: background-color 0.3s ease, color 0.3s ease;
-                }
-
-                .pagination a:hover {
-                    background-color: #007bff;
-                    color: white;
-                }
-
-                .pagination .active {
-                    background-color: #007bff;
-                    color: white;
-                    border-color: #007bff;
-                }
-
-                .pagination .disabled {
-                    color: #aaa;
-                    border-color: #ddd;
-                    pointer-events: none;
-                }
-        </style>
+            <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+                <p><strong>Records on This Page : </strong> {{page_obj|length}}</p>
+                <p><strong>Total Records : </strong>{{page_obj.paginator.count}}</p>
+            </div>
+        {% else %}
+            <div class="no-data"><strong>No students found in the database.</strong></div>
+        {% endif %}
 
     </div>
 </body>
