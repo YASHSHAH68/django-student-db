@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Student Form</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f0f2f5;
+        padding: 40px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+      }
+
+      td {
+        padding: 8px 10px;
+        vertical-align: top;
+      }
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 6px;
+        color: #34495e;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fdfdfd;
+        font-size: 15px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="tel"]:focus,
+      textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .gender-options {
+        display: flex;
+        gap: 15px;
+        padding-top: 6px;
+      }
+
+      .gender-options label {
+        font-weight: normal;
+        color: #333;
+      }
+
+      .form-table {
+        margin-bottom: 40px;
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 12px 28px;
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 50px 0;
+      }
+
+      @media screen and (max-width: 600px) {
+        td {
+          display: block;
+          width: 100%;
+        }
+
+        .gender-options {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Register New Student</h2>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <table class="form-table">
+          <tr>
+            <td><label for="fname">First Name:</label></td>
+            <td><input type="text" id="fname" name="fname" value="{{ form.fname.value|default_if_none:'' }}"/>
+                {% if form.fname.errors %}
+                  <div style="color:red;">{{ form.fname.errors.0 }}</div>
+                {% endif %}
+                {% if form.non_field_errors %}
+                  <div style="color: red;"> {{form.non_field_errors.0}}</div>
+                {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><label for="lname">Last Name:</label></td>
+            <td><input type="text" id="lname" name="lname" value="{{ form.lname.value|default_if_none:'' }}"/>
+                {% if form.lname.errors %}
+                  <div style="color:red;">{{ form.lname.errors.0 }}</div>
+                {% endif %}
+                {% if form.non_field_errors %}
+                <div style="color: red;"> {{form.non_field_errors.0}}</div>
+                {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input type="email" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}"/>
+                  {% if form.email.errors %}
+                    <div style="color:red;">{{ form.email.errors.0 }}</div>
+                  {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><label for="gender">Gender:</label></td>
+            <td>
+                <div class="gender-options">
+                    <label><input type="radio" name="gender" value="Male" checked="True"/> Male</label>
+                    <label><input type="radio" name="gender" value="Female"/> Female</label>
+                    <label><input type="radio" name="gender" value="Other"/> Other</label>
+                </div>
+                 {% if form.gender.errors %}
+                    <div style="color:red;">{{ form.gender.errors.0 }}</div>
+                    {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><label for="phoneno">Phone Number:</label></td>
+            <td>
+              <input
+                type="tel"
+                id="phoneno"
+                name="phoneno"
+                value="{{ form.phoneno.value|default_if_none:'' }}"
+              />
+              {% if form.phoneno.errors %}
+                  <div style="color:red;">{{ form.phoneno.errors.0 }}</div>
+                {% endif %}
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="status">Status:</label></td>
+                <td>
+                    <select name="status" id="status">
+                      <option value="" selected>--Select Choice --</option>
+                      <option value="Activate">Activate</option>
+                  </select>
+                    {% if form.status.errors %}
+                    <div style="color:red;">{{ form.status.errors.0 }}</div>
+                    {% endif %}
+
+                </td>   
+            </tr>
+
+        <tr>
+          <td><label for="course">Course Name:</label></td>
+          <td>
+            <select name="course" id="course">
+                <option value="">-- Select Course --</option>
+                {% for course in courses %}
+                  <option value="{{ course.id }}" {% if course.id|stringformat:"s" == form.course.value|stringformat:"s" %}selected{% endif %}>{{ course.name }}</option>
+                {% endfor %}
+            </select>
+              {% if form.course.errors %}
+                <div style="color:red;">{{ form.course.errors.0 }}</div>
+              {% endif %}
+
+          </td>
+        </tr>
+        </table>
+        <button type="submit">
+          {%if mode == 'edit' %}
+              Edit Student
+          {% else %}
+              Insert New Student
+          {% endif %}
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
