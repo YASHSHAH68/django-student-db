@@ -30,7 +30,6 @@ class CourseForm(forms.ModelForm):
     
 class StudentForm(forms.ModelForm):
 
-
     class Meta:
         model = Student
         fields = ['fname', 'lname', 'email', 'gender', 'phoneno', 'status', 'course']

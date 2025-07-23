@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Student
-from .forms import CourseForm , StudentForm
+from .forms import CourseForm , StudentForm 
+from django.db.models import Q
 from django.core.paginator import Paginator
 
 def course_form(request):
@@ -27,8 +28,13 @@ def student_form(request):
 
 
 def course_list(request):
+
     courses = Course.objects.all().order_by('-createdAt')
-    
+    query = request.GET.get('query' , '')
+
+    if query:
+        courses = Course.objects.filter(Q(name__icontains = query) | Q(description__icontains = query))
+
     paginator = Paginator(courses , 5)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
@@ -37,7 +43,9 @@ def course_list(request):
 
 def student_list(request):
     students = Student.objects.all().order_by('-createdAt')
-
+    query = request.GET.get('query')
+    if query:
+        students = Student.objects.filter(Q(fname__icontains = query) | Q(lname__icontains = query) | Q(phoneno__icontains = query) | Q(email = query))
     paginator = Paginator(students , 5)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
@@ -84,9 +92,5 @@ def student_delete(request, student_id):
     
     return render(request, 'confirm_student_deletion.html', {'student': student})
 
-def course_search(request):
-    pass
-def student_search(request):
-    pass
 
 

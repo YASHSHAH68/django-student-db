@@ -183,7 +183,7 @@
         </div>
 
             <form class="search-box d-flex" method="GET" action="">
-                <input class="form-control me-2" type="search" name="query" placeholder="Search..." aria-label="Search">
+                <input class="form-control me-2" type="search" name="query"  value = "{{request.GET.query}}" placeholder="Search Name and Description" aria-label="Search">
                 <button class="btn btn-primary" type="submit">Search</button>
             </form>
 
@@ -226,7 +226,7 @@
     
            <div class="pagination">
                     {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">&laquo; Prev</a>
+                <a href="?page={{ page_obj.previous_page_number }}&query={{request.GET.query}}">&laquo; Prev</a>
                     {% else %}
                 <a class="disabled">&laquo; Prev</a>
                     {% endif %}
@@ -235,12 +235,12 @@
                     {% if page_obj.number == num %}
                     <a class="active">{{ num }}</a>
                         {% else %}
-                    <a href="?page={{ num }}">{{ num }}</a>
+                    <a href="?page={{ num }}&query={{request.GET.query}}">{{ num }}</a>
                         {% endif %}
                         {% endfor %}
 
                 {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}&query={{request.GET.query}}">Next &raquo;</a>
                     {% else %}
                 <a class="disabled">Next &raquo;</a>
                     {% endif %}
