@@ -237,15 +237,14 @@
                 <a class="disabled">Next &raquo;</a>
                     {% endif %}
             </div>
-            <div class="d-flex justify-content-between align-items-center mt-3 px-2">
-                <p><strong>Records on This Page : </strong> {{page_obj|length}}</p>
-                <p><strong>Total Records : </strong>{{page_obj.paginator.count}}</p>
-            </div>
         {% endif %}
         {% else %}
             <div class="no-data"><strong>No students found in the database.</strong></div>
         {% endif %}
-
+        <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+            <p><strong>Records on This Page : </strong> {{page_obj|length}}</p>
+            <p><strong>Total Records : </strong> {{page_obj.paginator.count}}</p>
+        </div>
     </div>
 </body>
 </html>
