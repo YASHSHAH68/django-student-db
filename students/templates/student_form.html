@@ -188,8 +188,8 @@
               <label for="status">Status:</label></td>
                 <td>
                     <select name="status" id="status">
-                        <option value="Activate" {% if form.status.value == "Activate" %} selected {% endif %}>Activate</option>
-                        <option value="Deactivate" {% if form.status.value == "Deactivate" %}selected {% endif %}>Deactivate</option>
+                        <option value="Active" {% if form.status.value == "Active" %} selected {% endif %}>Active</option>
+                        <option value="Deactive" {% if form.status.value == "Deactive" %}selected {% endif %}>Deactive</option>
                   </select>
                     {% if form.status.errors %}
                     <div style="color:red;">{{ form.status.errors.0 }}</div>
@@ -216,7 +216,7 @@
         </table>
         <button type="submit">
           {%if mode == 'edit' %}
-              Edit Student
+              Update Student Details
           {% else %}
               Insert New Student
           {% endif %}
