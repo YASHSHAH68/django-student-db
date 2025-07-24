@@ -159,9 +159,9 @@
             <td><label for="gender">Gender:</label></td>
             <td>
                 <div class="gender-options">
-                    <label><input type="radio" name="gender" value="Male" checked="True"/> Male</label>
-                    <label><input type="radio" name="gender" value="Female"/> Female</label>
-                    <label><input type="radio" name="gender" value="Other"/> Other</label>
+                    <label><input type="radio" name="gender" value="Male" {% if form.gender.value == "Male" %}checked{% endif %}/> Male</label>
+                    <label><input type="radio" name="gender" value="Female" {% if form.gender.value == "Female" %}checked{% endif %}/> Female</label>
+                    <label><input type="radio" name="gender" value="Other" {% if form.gender.value == "Other" %}checked{% endif %}/> Other</label>
                 </div>
                  {% if form.gender.errors %}
                     <div style="color:red;">{{ form.gender.errors.0 }}</div>

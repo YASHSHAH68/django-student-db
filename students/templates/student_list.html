@@ -202,10 +202,10 @@
                                 <span>{{ student.course.name }}</span>
 
                                 <div class = "position" style="gap: 40px;">
-                                    <a href="{% url 'student_edit' student.id %}">
+                                    <a href="{% url 'student_edit' student.id %}?query={{ query }}&limit={{ limit }}&page={{ page_obj.number }}">
                                         <button class = "icon"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </a>
-                                    <a href="{% url 'student_delete' student.id %}">
+                                    <a href="{% url 'student_delete' student.id %}?query={{ query }}&limit={{ limit }}&page={{ page_obj.number }}">
                                     <button class = "icon1"><i class="fa-solid fa-trash"></i></button>
                                     </a>
                                 </div>

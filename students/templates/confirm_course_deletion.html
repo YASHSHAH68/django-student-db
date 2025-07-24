@@ -72,10 +72,10 @@
         <form method="post" action="{% url 'course_delete' course.id %}?query={{ query }}&limit={{ limit }}&page={{page}}">
             {% csrf_token %}
                 <div class="btn-group">
-                <button type="submit" class="btn btn-delete">Delete</button>
-        <a href="{% url 'courses_list' %}?query={{ query }}&limit={{ limit }}&page={{page}}" class="btn btn-cancel">Cancel</a>
-    </div>
-</form>
+                    <button type="submit" class="btn btn-delete">Delete</button>
+                    <a href="{% url 'courses_list' %}?query={{ query }}&limit={{ limit }}&page={{ page }}" class="btn btn-cancel">Cancel</a>
+                </div>
+        </form>
 
     </div>
 </body>

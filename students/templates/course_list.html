@@ -221,10 +221,10 @@
                             <div class = "position">
                                 <span>{{ course.description }}</span>
                                 <div class = "position" style="gap: 40px;">
-                                    <a href="{% url 'course_edit' course.id %}">
+                                    <a href="{% url 'course_edit' course.id %}?query={{ query }}&limit={{ limit }}&page={{ page_obj.number }}">
                                         <button class = "icon"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </a>
-                                    <a href="{% url 'course_delete' course.id %}">
+                                    <a href="{% url 'course_delete' course.id %}?query={{ query }}&limit={{ limit }}&page={{ page_obj.number }}">
                                         <button class = "icon1"><i class="fa-solid fa-trash"></i></button>
                                     </a>
                                 </div>

@@ -32,7 +32,7 @@ class StudentForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = ['fname', 'lname', 'email', 'gender', 'phoneno', 'status', 'course']
+        fields = ['fname', 'lname', 'email' ,'status','gender', 'phoneno', 'course']
     
     def clean_course(self):
         course = self.cleaned_data.get('course')
@@ -82,3 +82,6 @@ class StudentForm(forms.ModelForm):
             raise ValidationError("First and last name cannot be the same.")
         return cleaned_data
 
+class StudentCreateForm(StudentForm):
+    class Meta(StudentForm.Meta):
+        exclude = ['status']

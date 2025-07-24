@@ -69,11 +69,11 @@
     <div class="box">
         <h2>Confirm Deletion</h2>
         <p>Are you sure you want to delete the course "<strong><br>Student Name = {{ student.fname }}</strong>"?</p>
-        <form method="post">
+        <form method="post" action="{% url 'student_delete' student.id %}?query={{ query }}&limit={{ limit }}&page={{ page }}">
             {% csrf_token %}
             <div class="btn-group">
                 <button type="submit" class="btn btn-delete">Delete</button>
-                <a href="{% url 'students_list' %}" class="btn btn-cancel">Cancel</a>
+                <a href="{% url 'students_list' %}?query={{ query }}&limit={{ limit }}&page={{ page }}" class="btn btn-cancel">Cancel</a>
             </div>
         </form>
     </div>
