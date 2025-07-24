@@ -58,7 +58,7 @@ def course_list(request):
 
 
 def student_list(request):
-    query = request.GET.get('query')
+    query = request.GET.get('query','')
     try:
         limit = int(request.GET.get('limit' , '5'))
     except:
